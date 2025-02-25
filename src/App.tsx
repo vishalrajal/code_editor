@@ -4,7 +4,7 @@ import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { Code2, Eye, Layout, Github, MonitorSmartphone, Save, Share2, Download, Sparkles as FileSparkles } from 'lucide-react';
+import { Code2, Eye, Layout, Github, MonitorSmartphone, Save, Share2, Download, Sparkles as FileSparkles, Trash2 } from 'lucide-react';
 
 const defaultHTML = `<div class="hello">
   <h1>Hello World!</h1>
@@ -241,6 +241,22 @@ function App() {
     }
   };
 
+  const handleEraseAll = () => {
+    if (window.confirm('Are you sure you want to erase all code in the current editor?')) {
+      switch (activeTab) {
+        case 'html':
+          setHTML('');
+          break;
+        case 'css':
+          setCSS('');
+          break;
+        case 'javascript':
+          setJS('');
+          break;
+      }
+    }
+  };
+
   const handleShare = async () => {
     try {
       const codeToShare = {
@@ -312,6 +328,13 @@ function App() {
               title="Format Code"
             >
               <FileSparkles className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleEraseAll}
+              className="p-2 rounded bg-red-700 hover:bg-red-600"
+              title="Erase All"
+            >
+              <Trash2 className="w-5 h-5" />
             </button>
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
